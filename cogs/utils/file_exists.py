@@ -9,7 +9,7 @@ filepath = pathlib.Path(r'C:\output_csv')
 new_destination = pathlib.Path()
 
 
-def get_filepaths(directory: typing.Union[str, bytes, os.PathLike]) -> list[str]:
+def get_filepaths(directory) -> list[str]:
     """
     This function will generate the file names in a directory
     tree by walking the tree either top-down or bottom-up. For each
@@ -54,7 +54,7 @@ utc_time = datetime.datetime.utcnow()
 utc_time = utc_time.strftime("%a %b %d %Y %I %M %p")
 
 
-def rename_and_move(filepath: typing.Union[str, bytes, os.PathLike]) -> None:
+def rename_and_move(filepath) -> None:
     """Renames the file in a directory and then moves it"""
     for dirpath, dirnames, files in os.walk(filepath):
         if files:
@@ -72,7 +72,7 @@ def rename_and_move(filepath: typing.Union[str, bytes, os.PathLike]) -> None:
                 raise
 
 
-def rename_csv(filepath: typing.Union[str, bytes, os.PathLike]) -> None:
+def rename_csv(filepath) -> None:
     """Renames the csv given"""
     for dirpath, dirnames, files in os.walk(filepath):
         if files:
