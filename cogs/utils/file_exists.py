@@ -9,7 +9,7 @@ filepath = pathlib.Path(r'C:\output_csv')
 new_destination = pathlib.Path()
 
 
-def get_filepaths(directory: typing.Union[str, bytes, os.PathLike]) -> list[str]:
+def get_filepaths(directory: typing.Union[str, bytes, os.PathLike]) -> list:
     """
     This function will generate the file names in a directory
     tree by walking the tree either top-down or bottom-up. For each
