@@ -1,9 +1,9 @@
 import datetime
 import discord
 from discord.ext import commands
-from utils.lists_dicts import order
-from utils.functions_used import modify_dict, get_deep_copy, csv_to_df_to_dict
-from utils.paths_for_functions import path_for_csv_to_dict
+from cogs.utils.lists_dicts import order
+from cogs.utils.functions_used import modify_dict, get_deep_copy, csv_to_df_to_dict
+from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
 
 class EmbedNoTimeZone(commands.Cog, name="SpecificDayInEST"):

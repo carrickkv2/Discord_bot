@@ -2,7 +2,7 @@ import aiohttp
 from discord.ext import commands, tasks
 import discord
 import time
-from utils.extract_table import usage_extract
+from cogs.utils.extract_table import usage_extract
 import random
 import validators
 

@@ -2,9 +2,9 @@ from discord.ext import commands
 import discord
 import pytz
 import datetime
-from utils.functions_used import get_days, modify_dict, csv_to_df_to_dict, get_deep_copy
-from utils.timezone_finder import get_timezone_of_user
-from utils.paths_for_functions import path_for_csv_to_dict
+from cogs.utils.functions_used import get_days, modify_dict, csv_to_df_to_dict, get_deep_copy
+from cogs.utils.timezone_finder import get_timezone_of_user
+from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
 
 class EmbedDaysTimezone(commands.Cog, name="AllDaysInYourTimeZone"):

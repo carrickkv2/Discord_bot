@@ -1,9 +1,8 @@
 from discord.ext import commands
 import discord
 import datetime
-from utils.functions_used import get_days, modify_dict, get_deep_copy, csv_to_df_to_dict
-from utils.paths_for_functions import path_for_csv_to_dict
-
+from cogs.utils.functions_used import get_days, modify_dict, get_deep_copy, csv_to_df_to_dict
+from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
 
 class Embed(commands.Cog, name="AllDaysInEST"):

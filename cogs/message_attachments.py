@@ -1,9 +1,9 @@
 from discord.ext import commands
-from utils.extract_table import extract_to_csv, usage_extract
 import pathlib
-from utils.write_headers import write_csv
-from utils.file_exists import rename_and_move, rename_csv
-from utils.paths_for_functions import path_for_csv_output_for_both_rename_and_extract, path_for_write_csv
+from cogs.utils.extract_table import extract_to_csv, usage_extract
+from cogs.utils.write_headers import write_csv
+from cogs.utils.file_exists import rename_and_move, rename_csv
+from cogs.utils.paths_for_functions import path_for_csv_output_for_both_rename_and_extract, path_for_write_csv
 
 
 # from csv_to_df import csv_to_df_to_dict

@@ -3,7 +3,6 @@ from os import getenv
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from cogs import admin, embed, embed_no_timezone, embed_days_timezone, embed_day_timezone, error_handler, owner_commands,message_attachments
 from cogs.help_commands import EmbedHelpCommand
 
 
@@ -25,23 +24,23 @@ bot = commands.Bot(command_prefix="?", allowed_mentions=discord.AllowedMentions(
 ), intents=intents, help_command=EmbedHelpCommand()
                    )
 
-bot.load_extension("owner_commands")
+bot.load_extension("cogs.owner_commands")
 
-bot.load_extension('jishaku')
+bot.load_extension("jishaku")
 
-bot.load_extension('admin')
+bot.load_extension("cogs.admin")
 
-bot.load_extension("error_handler")
+bot.load_extension("cogs.error_handler")
 
-bot.load_extension("message_attachments")
+bot.load_extension("cogs.message_attachments")
 
-bot.load_extension("embed")
+bot.load_extension("cogs.embed")
 
-bot.load_extension("embed_no_timezone")
+bot.load_extension("cogs.embed_no_timezone")
 
-bot.load_extension("embed_day_timezone")
+bot.load_extension("cogs.embed_day_timezone")
 
-bot.load_extension("embed_days_timezone")
+bot.load_extension("cogs.embed_days_timezone")
 
 token = getenv("TOKEN")
 bot.run(token)
