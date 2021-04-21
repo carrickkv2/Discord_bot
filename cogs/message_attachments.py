@@ -14,6 +14,7 @@ def my_custom_check():
     def predicate(ctx: commands.Context):
         if ctx.message.channel.id == 721443699288178778 or ctx.message.author.id == 230942498086846464:
             return True
+
     return commands.check(predicate)
 
 
@@ -28,7 +29,13 @@ class Attachments(commands.Cog):
 
     @commands.check_any(my_custom_check())
     @commands.cooldown(1, 120, commands.BucketType.user)
-    @commands.command(aliases=["at", "att"])
+    @commands.command(name="at",
+                      aliases=["att"],
+                      brief="Get's the image attachment from the message",
+                      help="Get's the image posted in announcements and processes it so that it can be used by the bot "
+                           "This command can only be used in the announcements channel"
+                           "Example usage is `?at <message to post here>`"
+                      )
     async def read_url(self, ctx: commands.Context) -> None:
         """
         Gets the image attachment from the message
