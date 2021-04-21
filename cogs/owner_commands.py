@@ -13,11 +13,11 @@ class OwnerCommands(commands.Cog, name="General Commands", description="These co
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
-    @tasks.loop(minutes=10, count=None)
+    @tasks.loop(hours=2, count=None)
     async def my_background_task(self):
         """Will loop every 86400 seconds and change the bots presence."""
-        while not self.bot.is_closed():
-            statuses = [
+        # while not self.bot.is_closed():
+        statuses = [
                 "CSGO",
                 "Fall Guys",
                 f"on {len(self.bot.guilds)} servers | ?help",
@@ -34,14 +34,16 @@ class OwnerCommands(commands.Cog, name="General Commands", description="These co
                 "What's up dawg",
                 "Python",
                 "A Boy and His Blob"]
-            status = random.choice(statuses)
-            await self.bot.change_presence(activity=discord.Game(name=status))
+        status = random.choice(statuses)
+        await self.bot.change_presence(activity=discord.Game(name=status))
 
     @commands.Cog.listener()
     async def on_ready(self) -> None:
         """Print a message whenever the bot logs on or reconnects."""
         print(f"Logged on as {self.bot.user}!")
-        # Setting `Playing ` status
+
+    @commands.Cog.listener('on_ready')
+    async def start_status(self) -> None:
         await self.bot.wait_until_ready()
         self.my_background_task.start()
 
