@@ -34,7 +34,7 @@ class EmbedDaysTimezone(commands.Cog, name="AllDaysInYourTimeZone"):
                 time_zone = pytz.timezone(get_timezone_of_user(timezone))
 
             embed = discord.Embed(
-                title='Schedule For All Days',
+                title='Schedule For All Days' + " In The " + str(time_zone) + " timezone",
                 colour=discord.Colour.random(),
                 timestamp=datetime.datetime.utcnow(),
             )
