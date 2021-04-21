@@ -32,8 +32,8 @@ class Attachments(commands.Cog):
     @commands.command(name="at",
                       aliases=["att"],
                       brief="Get's the image attachment from the message",
-                      help="Get's the image posted in announcements and processes it so that it can be used by the bot "
-                           "This command can only be used in the announcements channel"
+                      help="Get's the image posted in announcements and processes it so that it can be used by the bot.\n"
+                           "This command can only be used in the announcements channel.\n"
                            "Example usage is `?at <message to post here>`"
                       )
     async def read_url(self, ctx: commands.Context) -> None:
