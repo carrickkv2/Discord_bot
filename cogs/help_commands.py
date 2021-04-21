@@ -51,7 +51,7 @@ class EmbedHelpCommand(commands.MinimalHelpCommand):
 
     async def send_bot_help(self, mapping):
         embed = discord.Embed(title="H₂O's Command list", colour=discord.Colour.blurple())
-        embed.description = "Use `?help <cmd>` for more information about a command. \n Example: `?help daytz`"
+        embed.description = "Use `?help <cmd>` for more information about a command. \nExample: `?help daytz`"
         for cog, commands in mapping.items():
             filtered = await self.filter_commands(commands, sort=True)
             command_signatures = [self.get_command_signature(c) for c in filtered]
