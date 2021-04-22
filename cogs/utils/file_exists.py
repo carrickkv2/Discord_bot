@@ -4,8 +4,9 @@ import pathlib
 import typing
 import shutil
 import random
+from cogs.utils.paths_for_functions import path_for_file_exists_file_path, path_for_file_exists_shuntil
 
-filepath = pathlib.Path(r'C:\output_csv')
+filepath = pathlib.Path(path_for_file_exists_file_path)
 new_destination = pathlib.Path()
 
 
@@ -66,7 +67,7 @@ def rename_and_move(filepath: typing.Union[str, bytes, os.PathLike]) -> None:
                 new = str(dirpath + '\\' + utc_time + rand + '.csv')
                 os.rename(full_file_paths, get_raw_string(new))
                 path_to_move = get_raw_string(list_to_string(get_filepaths(filepath)))
-                shutil.move(path_to_move, r'C:\old')
+                shutil.move(path_to_move, path_for_file_exists_shuntil)
             except Exception as e:
                 print(e)
                 raise
