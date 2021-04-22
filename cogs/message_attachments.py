@@ -64,7 +64,7 @@ class Attachments(commands.Cog):
                     if extract_to_csv(attachment_string, output):
                         try:
                             rename_csv(output)
-                            write_csv(path_for_write_csv)  # Todo: find out how this would work on linux
+                            write_csv(path_for_write_csv)
                             await ctx.message.add_reaction('\U00002611')
                         except Exception as e:
                             print(e)
