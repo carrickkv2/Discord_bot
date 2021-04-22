@@ -5,7 +5,7 @@ from cogs.utils.functions_used import get_days, modify_dict, get_deep_copy, csv_
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
 
-class Embed(commands.Cog, name="AllDaysInEST"):
+class Embed(commands.Cog, name="All Days In EST"):
     """
     This cog sends back to the user all events and times of the events happening on all days.
     All times are in EST.
