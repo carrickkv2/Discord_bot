@@ -7,7 +7,7 @@ from cogs.utils.timezone_finder import get_timezone_of_user
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
 
-class EmbedDaysTimezone(commands.Cog, name="AllDaysInYourTimeZone"):
+class EmbedDaysTimezone(commands.Cog, name="All Days In Your TimeZone"):
     """
     This cog sends back to the user all events and times of the events happening on all days.
     All times are in EST.
