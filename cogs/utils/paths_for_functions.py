@@ -6,4 +6,4 @@ path_for_write_csv = r'C:\output_csv\table.csv'
 
 path_for_file_exists_file_path = r'C:\output_csv'
 
-path_for_file_exists_shuntil = "r'C:\old'"
+path_for_file_exists_shuntil = r'C:\old'
