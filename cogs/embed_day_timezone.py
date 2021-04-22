@@ -7,7 +7,7 @@ from cogs.utils.timezone_finder import get_timezone_of_user
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
 
-class EmbedTimeZone(commands.Cog, name="SpecificDayInYourTimezone"):
+class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
     """
     This cog sends back to the user all events and times associated with a day.
     Times for the events are returned in the users timezone.
