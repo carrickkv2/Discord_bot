@@ -1,4 +1,4 @@
-### Discord_bot
+### Schedule Bot
 
 A discord bot created for the faith community [discord server.](https://discord.gg/2JVQNmJR8y) 
 
@@ -13,6 +13,7 @@ Preferably, I'll be happy if you invite the bot to your server, but if you want 
 3. In the python file paths_for_functions, change the respective paths to your own paths.
 4. Create a .env file in the main directory (where bot.py is) and add your bot's Token and Extract API Token to it. 
    (Token and Api should both be in full caps)
+6. Install all the libraries needed from requirements.txt
 5. Run the bot.py file
 
 An example csv has been given in the csv directory. This is to prevent any errors when the bot starts. 
