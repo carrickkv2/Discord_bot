@@ -6,7 +6,7 @@ from cogs.utils.functions_used import modify_dict, get_deep_copy, csv_to_df_to_d
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
 
-class EmbedNoTimeZone(commands.Cog, name="SpecificDayInEST"):
+class EmbedNoTimeZone(commands.Cog, name="Specific Day In EST"):
     """
     This cog sends back to the user all events and times associated with a day.
     All times are in EST.
