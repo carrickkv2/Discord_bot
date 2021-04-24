@@ -32,6 +32,8 @@ class EmbedNoTimeZone(commands.Cog, name="Specific Day In EST"):
         """
         async with ctx.message.channel.typing():
 
+            user = await self.bot.fetch_user(230942498086846464)
+
             for days in order:
                 if days in day.title():
                     day = days
@@ -45,7 +47,7 @@ class EmbedNoTimeZone(commands.Cog, name="Specific Day In EST"):
             )
 
             embed.set_footer(
-                text="See any bugs? @Aslan(The Lion) \nType ?help for help commands",
+                text=f"See any bugs? {user.display_name} \nType ?help for help commands",
                 icon_url="https://cdn.discordapp.com/emojis/754736642761424986.png",
             )
 
