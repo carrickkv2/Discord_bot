@@ -28,6 +28,8 @@ class EmbedDaysTimezone(commands.Cog, name="All Days In Your TimeZone"):
 
         async with ctx.message.channel.typing():
 
+            user = await self.bot.fetch_user(230942498086846464)
+
             if timezone == 'EST':
                 time_zone = pytz.timezone('EST')
             else:
@@ -40,7 +42,7 @@ class EmbedDaysTimezone(commands.Cog, name="All Days In Your TimeZone"):
             )
 
             embed.set_footer(
-                text="See any bugs? @Aslan(The Lion) \nType ?help for help commands",
+                text=f"See any bugs? {user.display_name} \nType ?help for help commands",
                 icon_url="https://cdn.discordapp.com/emojis/754736642761424986.png",
             )
 
