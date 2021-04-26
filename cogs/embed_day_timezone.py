@@ -57,7 +57,7 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
                 get_deep_copy(csv_to_df_to_dict(path_for_csv_to_dict)))
 
             for key, value in copy_of_dictionary_from_numpy[day.title()].items():
-                if "EST" in key:
+                if 'Eastern' in key:
                     # val = str(day + " ") + "(" + str(value) + ")"
                     # val = "```py\n" + val + "\n```"
                     # val = '> ' + val
