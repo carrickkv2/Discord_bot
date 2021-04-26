@@ -6,6 +6,9 @@ from cogs.utils.csv_to_df import csv_to_df_to_dict
 from cogs.utils.lists_dicts import order
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
 
+temp_value = ""
+temp_string_containing_time = ""
+
 
 def get_days() -> list:
     "Gets the list of days in the dict and then sorts them"
@@ -18,12 +21,14 @@ def get_string_for_time() -> str:
     """Stores in a multiline string the various times for the events.
     These times are in a datetime form. For example: 2021-02-26 08:30:00-05:00
     """
+    global temp_value
     string_for_time = ""
     for day in get_days():
         for key, value in csv_to_df_to_dict(path_for_csv_to_dict)[day].items():
-            if 'EST' in key:
+            if 'Eastern' in key:
                 temp_value = str(value)
-            if 'EST' not in key:
+                # print(temp_value)
+            if 'Eastern' not in key:
                 key = ''.join((temp_value, 'Time ', key))
                 if 'Time' in key:
                     temp_list = re.sub(r"(\d{1,2}:\d{2}):", "\g<1>", key)
@@ -74,18 +79,15 @@ def next_string(string_file_to_read: str, string_to_compare: str) -> str:
 
 def modify_dict(dict_to_modify: dict) -> dict:
     """Takes a dict and modifies it so that it's times are in the datetime form( 2021-02-26 08:30:00-05:00 )"""
+    global temp_string_containing_time
     count = 0
     for day in get_days():
         if count < 1:
             temp_string_containing_time = get_starting_string(get_string_for_time())
             count += 1
         for key in csv_to_df_to_dict(path_for_csv_to_dict)[day].copy():
-            if 'EST' not in key:
+            if 'Eastern' not in key:
                 dict_to_modify.copy()[day][temp_string_containing_time] = dict_to_modify.copy()[day].pop(key)
                 temp_string_containing_time = next_string(get_string_for_time(), temp_string_containing_time)
     return dict_to_modify
-
-# Get a deep copy function - takes a dict and makes a deep copy
-# Modify dict then modifies that dict and returns it
-# Now you can use your dict
 
