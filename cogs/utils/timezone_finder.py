@@ -9,7 +9,7 @@ def get_timezone_of_user(time: str) -> str:
     The string is then converted to the longitude and latitude of the place
     the user gives and from there converted to a pytz timezone.
     """
-    geo_locator = Nominatim(user_agent="Faith_shed")
+    geo_locator = Nominatim(user_agent="Testing_for_bot")  # replace with yours
     geo_locator_rate = RateLimiter(geo_locator.geocode, min_delay_seconds=5, return_value_on_exception=None)
 
     lad = str(time)
@@ -20,5 +20,3 @@ def get_timezone_of_user(time: str) -> str:
     obj = TimezoneFinder()
     result = obj.timezone_at(lng=location.longitude, lat=location.latitude)
     return str(result)
-
-
