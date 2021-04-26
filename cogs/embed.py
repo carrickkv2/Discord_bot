@@ -46,7 +46,7 @@ class Embed(commands.Cog, name="All Days In EST"):
 
             for day in get_days():
                 for key, value in copy_of_dictionary_from_numpy[day].items():
-                    if "EST" in key:
+                    if 'Eastern' in key:
                         val = str(day + " ") + "(" + str(value) + ")"
                         val = "`" + val + "`"
                         # val = '> ' + val
