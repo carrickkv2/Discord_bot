@@ -11,10 +11,21 @@ temp_string_containing_time = ""
 
 
 def get_days() -> list:
-    "Gets the list of days in the dict and then sorts them"
+    """Gets the list of days in the dict and then sorts them"""
     days = [key for key in csv_to_df_to_dict(path_for_csv_to_dict)]
     days.sort(key=order.index)
     return days
+
+
+def get_timezone_for_date_parser() -> str:
+    day = get_days()[0]
+    first_key = next(iter(csv_to_df_to_dict(path_for_csv_to_dict)[day]))
+    first_key = str(first_key)
+    first_key = str(first_key.split("(")[1].split(")")[0])
+    return " " + first_key
+
+
+x = get_timezone_for_date_parser()
 
 
 def get_string_for_time() -> str:
@@ -36,7 +47,7 @@ def get_string_for_time() -> str:
                 if 'Time' in key:
                     temp_list = key.split('Time')
                     key = ''.join(temp_list)
-                    key += ' EST'
+                    key += x
                     # print(key)
                     string_for_time += str(dateparser.parse(key))
                     string_for_time += '\n'
@@ -90,4 +101,3 @@ def modify_dict(dict_to_modify: dict) -> dict:
                 dict_to_modify.copy()[day][temp_string_containing_time] = dict_to_modify.copy()[day].pop(key)
                 temp_string_containing_time = next_string(get_string_for_time(), temp_string_containing_time)
     return dict_to_modify
-
