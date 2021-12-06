@@ -6,10 +6,6 @@ from cogs.utils.file_exists import rename_and_move, rename_csv
 from cogs.utils.paths_for_functions import path_for_csv_output_for_both_rename_and_extract, path_for_write_csv
 
 
-# from csv_to_df import csv_to_df_to_dict
-# import logging
-
-
 def my_custom_check():
     def predicate(ctx: commands.Context):
         if ctx.message.channel.id == 721443699288178778 or ctx.message.author.id == 230942498086846464:
@@ -40,7 +36,6 @@ class Attachments(commands.Cog):
         """
         Gets the image attachment from the message
         """
-        # logger = logging.Logger('catch_all')
 
         attachment_string = ""
         output = pathlib.Path(path_for_csv_output_for_both_rename_and_extract)
@@ -73,13 +68,9 @@ class Attachments(commands.Cog):
                             raise
                 except Exception as e:
                     print(e)
-                    # logger.exception('Failed: ' + str(e))
                     await ctx.message.add_reaction('\U0000274c')
                     await user.send(str(e))
                     raise
-
-            # Put the extract API here and let the check mark come only after the extract API runs
-            # Todo: Take all the rstrings and put them in one file, then import from that file to your functions
 
 
 def setup(bot: commands.Bot) -> None:
