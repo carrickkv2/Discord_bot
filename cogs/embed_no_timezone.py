@@ -56,9 +56,6 @@ class EmbedNoTimeZone(commands.Cog, name="Specific Day In EST"):
 
             for key, value in copy_of_dictionary_from_numpy[day].items():
                 if 'Eastern' in key:
-                    # val = str(day + " ") + "(" + str(value) + ")"
-                    # val = "```py\n" + val + "\n```"
-                    # val = '> ' + val
                     embed.add_field(name=value, value="~", inline=False)
                 else:
                     t = datetime.datetime.fromisoformat(key)
@@ -85,9 +82,3 @@ def setup(bot: commands.Bot) -> None:
     """Load the embed_no_timezone cog."""
     print("I am being loaded!")
     bot.add_cog(EmbedNoTimeZone(bot))
-
-# pick Tuesday from the EST, convert to utc
-# If the UTC is the next day or the UTC is greater than 12 am
-# then day should be the next Day and you should replace all the ESt times with UTC
-# Else
-# Just show the normal time
