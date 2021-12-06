@@ -38,7 +38,6 @@ def get_string_for_time() -> str:
         for key, value in csv_to_df_to_dict(path_for_csv_to_dict)[day].items():
             if 'Eastern' in key:
                 temp_value = str(value)
-                # print(temp_value)
             if 'Eastern' not in key:
                 key = ''.join((temp_value, 'Time ', key))
                 if 'Time' in key:
@@ -48,7 +47,6 @@ def get_string_for_time() -> str:
                     temp_list = key.split('Time')
                     key = ''.join(temp_list)
                     key += x
-                    # print(key)
                     string_for_time += str(dateparser.parse(key))
                     string_for_time += '\n'
     return string_for_time
