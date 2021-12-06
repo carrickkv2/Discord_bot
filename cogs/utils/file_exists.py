@@ -17,17 +17,14 @@ def get_filepaths(directory: typing.Union[str, bytes, os.PathLike]) -> list:
     directory in the tree rooted at directory top (including top itself),
     it yields a 3-tuple (dirpath, dirnames, filenames).
     """
-    file_paths = []  # List which will store all of the full filepaths.
-
-    # Walk the tree.
+    file_paths = []  
+    
     for root, directories, files in os.walk(directory):
         for filename in files:
-            # Join the two strings in order to form the full filepath.
             filepath = os.path.join(root, filename)
-            file_paths.append(filepath)  # Add it to the list.
-
-    return file_paths  # Self-explanatory.
-
+            file_paths.append(filepath)  
+            
+    return file_paths 
 
 _dRawMap = {8: r'\b', 7: r'\a', 12: r'\f', 10: r'\n', 13: r'\r', 9: r'\t', 11: r'\v'}
 
@@ -47,8 +44,6 @@ full_file_paths = get_filepaths(filepath)
 full_file_paths = list_to_string(full_file_paths)
 full_file_paths = get_raw_string(full_file_paths)
 
-# print(get_raw_string(full_file_paths))
-# file_path = os.path.basename(full_file_paths)
 
 # Get the current time and parse it into a human readable format.
 utc_time = datetime.datetime.utcnow()
@@ -63,7 +58,6 @@ def rename_and_move(filepath: typing.Union[str, bytes, os.PathLike]) -> None:
                 rand = random.SystemRandom()
                 rand = str(rand.randint(0, 10000))
                 rand += " "
-                # print(dirpath, 'has files')  # rename the file
                 new = str(dirpath + '\\' + utc_time + rand + '.csv')
                 os.rename(full_file_paths, get_raw_string(new))
                 path_to_move = get_raw_string(list_to_string(get_filepaths(filepath)))
@@ -77,14 +71,12 @@ def rename_csv(filepath: typing.Union[str, bytes, os.PathLike]) -> None:
     """Renames the csv given"""
     for dirpath, dirnames, files in os.walk(filepath):
         if files:
-            try:
-                # print(dirpath, 'has no files')  # rename the file
+            try:   
                 new = str(dirpath + '\\' + 'table' + '.csv')
                 os.rename(get_raw_string(list_to_string(get_filepaths(filepath))), get_raw_string(new))
             except Exception as e:
                 print(e)
                 raise
 
-# move old to another folder totally?
-# has file: rename and then move else return.
+
 # Todo: refactor and loop through rename and move so that we can rename more than one file
