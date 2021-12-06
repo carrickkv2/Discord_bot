@@ -13,10 +13,7 @@ def get_timezone_of_user(time: str) -> str:
     geo_locator_rate = RateLimiter(geo_locator.geocode, min_delay_seconds=5, return_value_on_exception=None)
 
     lad = str(time)
-    # print("Location address:", lad)
     location = geo_locator.geocode(lad)
-    # print("Latitude and Longitude of the said address:")
-    # print((location.latitude, location.longitude))
     obj = TimezoneFinder()
     result = obj.timezone_at(lng=location.longitude, lat=location.latitude)
     return str(result)
