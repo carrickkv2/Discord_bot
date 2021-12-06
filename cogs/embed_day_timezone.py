@@ -45,8 +45,6 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
                 timestamp=datetime.datetime.utcnow(),
             )
 
-            # embed.set_author(name=ctx.message.author)
-            # embed.set_thumbnail(url=ctx.message.author.avatar_url)
 
             embed.set_footer(
                 text=f"See any bugs? {user.display_name} \nType ?help for help commands",
@@ -58,9 +56,6 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
 
             for key, value in copy_of_dictionary_from_numpy[day.title()].items():
                 if 'Eastern' in key:
-                    # val = str(day + " ") + "(" + str(value) + ")"
-                    # val = "```py\n" + val + "\n```"
-                    # val = '> ' + val
                     embed.add_field(name=value, value="~\n", inline=False)
                 else:
                     date_aware_time = datetime.datetime.fromisoformat(key)
@@ -83,12 +78,6 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
                                 check=lambda r, u: r.message == message_reaction_embed and u == ctx.author and str(
                                     r) == emoji)
         await message_reaction_embed.delete()
-
-        # def check(reaction, user):
-        #     return user == ctx.author and str(reaction.emoji) == '\N{Wastebasket}'
-        #
-        # reaction, user = await self.bot.wait_for('reaction_add', check=check)
-        # await message_reaction.delete()
 
 
 def setup(bot: commands.Bot) -> None:
