@@ -1,9 +1,10 @@
 import os
 from os import getenv
+
 import discord
+from cogs.help_commands import EmbedHelpCommand
 from discord.ext import commands
 from dotenv import load_dotenv
-from cogs.help_commands import EmbedHelpCommand
 
 
 load_dotenv()  # For the env file
@@ -16,13 +17,17 @@ intents = discord.Intents.default()  # All but the two privileged ones
 
 intents.members = True  # Subscribe to the Members intent
 
-bot = commands.Bot(command_prefix="?", allowed_mentions=discord.AllowedMentions(
-    users=False,  # Whether to ping individual user @mentions
-    everyone=False,  # Whether to ping @everyone or @here mentions
-    roles=False,  # Whether to ping role @mentions
-    replied_user=False,  # Whether to ping on replies to messages
-), intents=intents, help_command=EmbedHelpCommand()
-                   )
+bot = commands.Bot(
+    command_prefix="?",
+    allowed_mentions=discord.AllowedMentions(
+        users=False,  # Whether to ping individual user @mentions
+        everyone=False,  # Whether to ping @everyone or @here mentions
+        roles=False,  # Whether to ping role @mentions
+        replied_user=False,  # Whether to ping on replies to messages
+    ),
+    intents=intents,
+    help_command=EmbedHelpCommand(),
+)
 
 bot.load_extension("cogs.owner_commands")
 

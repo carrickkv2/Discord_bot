@@ -1,8 +1,9 @@
 import os
 import typing
-from ExtractTable import ExtractTable
-from dotenv import load_dotenv
 from os import getenv
+
+from dotenv import load_dotenv
+from ExtractTable import ExtractTable
 
 
 def extract_to_csv(image_url: str, output_folder: typing.Union[str, bytes, os.PathLike]) -> bool:
@@ -26,5 +27,5 @@ def usage_extract():
     api = getenv("API")
     et_sess = ExtractTable(api_key=api)
     output_extract = str(et_sess.check_usage())
-    output_extract += '\n'
+    output_extract += "\n"
     return output_extract

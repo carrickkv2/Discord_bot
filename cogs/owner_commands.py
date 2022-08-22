@@ -1,10 +1,12 @@
-import aiohttp
-from discord.ext import commands, tasks
-import discord
-import time
-from cogs.utils.extract_table import usage_extract
 import random
+import time
+
+import aiohttp
+import discord
 import validators
+from cogs.utils.extract_table import usage_extract
+from discord.ext import commands
+from discord.ext import tasks
 
 
 class OwnerCommands(commands.Cog, name="General Commands", description="These commands don't really do anything"):
@@ -18,22 +20,23 @@ class OwnerCommands(commands.Cog, name="General Commands", description="These co
         """Will loop every 86400 seconds and change the bots presence."""
         # while not self.bot.is_closed():
         statuses = [
-                "CSGO",
-                "Fall Guys",
-                f"on {len(self.bot.guilds)} servers | ?help",
-                "FIFA 21",
-                "NARUTO SHIPPUDEN Ultimate Ninja STORM 4",
-                "Valheim",
-                "God Loves You",
-                "Pace loves you",
-                "Assassins Creed Odyssey",
-                "Take care of yourself",
-                "Jesus is there for you",
-                "Jesus is Faithful",
-                "Love of the Lord",
-                "What's up dawg",
-                "Python",
-                "A Boy and His Blob"]
+            "CSGO",
+            "Fall Guys",
+            f"on {len(self.bot.guilds)} servers | ?help",
+            "FIFA 21",
+            "NARUTO SHIPPUDEN Ultimate Ninja STORM 4",
+            "Valheim",
+            "God Loves You",
+            "Pace loves you",
+            "Assassins Creed Odyssey",
+            "Take care of yourself",
+            "Jesus is there for you",
+            "Jesus is Faithful",
+            "Love of the Lord",
+            "What's up dawg",
+            "Python",
+            "A Boy and His Blob",
+        ]
         status = random.choice(statuses)
         await self.bot.change_presence(activity=discord.Game(name=status))
 
@@ -42,7 +45,7 @@ class OwnerCommands(commands.Cog, name="General Commands", description="These co
         """Print a message whenever the bot logs on or reconnects."""
         print(f"Logged on as {self.bot.user}!")
 
-    @commands.Cog.listener('on_ready')
+    @commands.Cog.listener("on_ready")
     async def start_status(self) -> None:
         await self.bot.wait_until_ready()
         self.my_background_task.start()
@@ -68,21 +71,14 @@ class OwnerCommands(commands.Cog, name="General Commands", description="These co
         message = await ctx.send("Testing Ping...")
         end_time = time.time()
         await message.edit(
-            content=f"Pong! {round(self.bot.latency * 1000)}ms\nAPI: {round((end_time - start_time) * 1000)}ms")
+            content=f"Pong! {round(self.bot.latency * 1000)}ms\nAPI: {round((end_time - start_time) * 1000)}ms"
+        )
 
     @commands.command(name="setstatus", hidden=True)
     @commands.is_owner()
     async def setstatus(self, ctx: commands.Context, *, text: str) -> None:
         """Set the bot's status."""
         await self.bot.change_presence(activity=discord.Game(name=text))
-        # todo: Get the right status forever
-
-    # @commands.command(aliases=["run"], hidden=True)
-    # @commands.is_owner()
-    # async def eval(self, ctx, *, code: codeblock_converter) -> None:
-    #     """Allows one to run python code"""
-    #     jsk = self.bot.get_command("jishaku py")
-    #     await jsk(ctx, argument=code)
 
     @commands.command(aliases=["edit"], hidden=True)
     @commands.is_owner()

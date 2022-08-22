@@ -1,8 +1,12 @@
-from discord.ext import commands
-import discord
 import datetime
-from cogs.utils.functions_used import get_days, modify_dict, get_deep_copy, csv_to_df_to_dict
+
+import discord
+from cogs.utils.functions_used import csv_to_df_to_dict
+from cogs.utils.functions_used import get_days
+from cogs.utils.functions_used import get_deep_copy
+from cogs.utils.functions_used import modify_dict
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
+from discord.ext import commands
 
 
 class Embed(commands.Cog, name="All Days In EST"):
@@ -15,12 +19,13 @@ class Embed(commands.Cog, name="All Days In EST"):
         self.bot = bot
 
     @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.command(name="days",
-                      aliases=["Days"],
-                      brief="Shows the schedule of all days in EST",
-                      help="Shows a detailed list of all events happening and the time they happen on in EST.\n"
-                           "Example usage is `?days`"
-                      )
+    @commands.command(
+        name="days",
+        aliases=["Days"],
+        brief="Shows the schedule of all days in EST",
+        help="Shows a detailed list of all events happening and the time they happen on in EST.\n"
+        "Example usage is `?days`",
+    )
     async def emb(self, ctx: commands.Context) -> None:
         """
         Gets the day from the user and returns an embed containing all events happening on that day.
@@ -31,7 +36,7 @@ class Embed(commands.Cog, name="All Days In EST"):
             user = await self.bot.fetch_user(230942498086846464)
 
             embed = discord.Embed(
-                title='Schedule For All Days',
+                title="Schedule For All Days",
                 colour=discord.Colour.random(),
                 timestamp=datetime.datetime.utcnow(),
             )
@@ -41,12 +46,11 @@ class Embed(commands.Cog, name="All Days In EST"):
                 icon_url="https://cdn.discordapp.com/emojis/754736642761424986.png",
             )
 
-            copy_of_dictionary_from_numpy = modify_dict(
-                get_deep_copy(csv_to_df_to_dict(path_for_csv_to_dict)))
+            copy_of_dictionary_from_numpy = modify_dict(get_deep_copy(csv_to_df_to_dict(path_for_csv_to_dict)))
 
             for day in get_days():
                 for key, value in copy_of_dictionary_from_numpy[day].items():
-                    if 'Eastern' in key:
+                    if "Eastern" in key:
                         val = str(day + " ") + "(" + str(value) + ")"
                         val = "`" + val + "`"
                         # val = '> ' + val
@@ -57,20 +61,17 @@ class Embed(commands.Cog, name="All Days In EST"):
                         t = t.strftime("%I:%M %p")
                         embed.add_field(name=value, value=t, inline=False)
 
-            embed.add_field(
-                name="NB",
-                value="These times are in EST\n",
-                inline=True
-            )
+            embed.add_field(name="NB", value="These times are in EST\n", inline=True)
 
             emoji = "\N{Wastebasket}"
 
         message_reaction_embed = await ctx.send(embed=embed)
         await message_reaction_embed.add_reaction(emoji)
 
-        await self.bot.wait_for("reaction_add",
-                                check=lambda r, u: r.message == message_reaction_embed and u == ctx.author and str(
-                                    r) == emoji)
+        await self.bot.wait_for(
+            "reaction_add",
+            check=lambda r, u: r.message == message_reaction_embed and u == ctx.author and str(r) == emoji,
+        )
         await message_reaction_embed.delete()
 
 
@@ -78,6 +79,7 @@ def setup(bot: commands.Bot) -> None:
     """Load the embed cog."""
     print("I am being loaded!")
     bot.add_cog(Embed(bot))
+
 
 # , description="Returns back to the User all events and times of the events \
 #                                                         happening on all days. All times are in EST."

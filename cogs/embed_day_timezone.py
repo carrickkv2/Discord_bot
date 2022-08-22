@@ -1,10 +1,13 @@
 import datetime
+
 import discord
 import pytz
-from discord.ext import commands
-from cogs.utils.functions_used import get_deep_copy, modify_dict, csv_to_df_to_dict
-from cogs.utils.timezone_finder import get_timezone_of_user
+from cogs.utils.functions_used import csv_to_df_to_dict
+from cogs.utils.functions_used import get_deep_copy
+from cogs.utils.functions_used import modify_dict
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
+from cogs.utils.timezone_finder import get_timezone_of_user
+from discord.ext import commands
 
 
 class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
@@ -17,23 +20,25 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
         self.bot = bot
 
     @commands.cooldown(1, 30, commands.BucketType.user)
-    @commands.command(name="daytz",
-                      aliases=["Daytz"],
-                      brief="Shows the schedule of a specific day in the users TimeZone.",
-                      help="Shows a detailed list of all events happening on a specific day and the time they happen "
-                           "on in the users Timezone. Both day and time are required arguments.\n"
-                           "Example usage is `?daytz tuesday ghana`")
+    @commands.command(
+        name="daytz",
+        aliases=["Daytz"],
+        brief="Shows the schedule of a specific day in the users TimeZone.",
+        help="Shows a detailed list of all events happening on a specific day and the time they happen "
+        "on in the users Timezone. Both day and time are required arguments.\n"
+        "Example usage is `?daytz tuesday ghana`",
+    )
     async def emb_tz(self, ctx: commands.Context, day: str, timezone: str) -> None:
         """
         Gets the day from the user and returns an embed containing all events happening on that day.
-        Both day and time are required arguments. 
+        Both day and time are required arguments.
         """
         async with ctx.message.channel.typing():
 
             user = await self.bot.fetch_user(230942498086846464)
 
-            if timezone == 'EST':
-                time_zone = pytz.timezone('EST')
+            if timezone == "EST":
+                time_zone = pytz.timezone("EST")
             else:
                 time_zone = pytz.timezone(get_timezone_of_user(timezone))
 
@@ -45,17 +50,15 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
                 timestamp=datetime.datetime.utcnow(),
             )
 
-
             embed.set_footer(
                 text=f"See any bugs? {user.display_name} \nType ?help for help commands",
                 icon_url="https://cdn.discordapp.com/emojis/754736642761424986.png",
             )
 
-            copy_of_dictionary_from_numpy = modify_dict(
-                get_deep_copy(csv_to_df_to_dict(path_for_csv_to_dict)))
+            copy_of_dictionary_from_numpy = modify_dict(get_deep_copy(csv_to_df_to_dict(path_for_csv_to_dict)))
 
             for key, value in copy_of_dictionary_from_numpy[day.title()].items():
-                if 'Eastern' in key:
+                if "Eastern" in key:
                     embed.add_field(name=value, value="~\n", inline=False)
                 else:
                     date_aware_time = datetime.datetime.fromisoformat(key)
@@ -66,7 +69,7 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
             embed.add_field(
                 name="NB",
                 value="Some of the days and times may have been changed to the next day because of your timezone\n",
-                inline=True
+                inline=True,
             )
 
             emoji = "\N{Wastebasket}"
@@ -74,9 +77,10 @@ class EmbedTimeZone(commands.Cog, name="Specific Day In Your Timezone"):
         message_reaction_embed = await ctx.send(embed=embed)
         await message_reaction_embed.add_reaction(emoji)
 
-        await self.bot.wait_for("reaction_add",
-                                check=lambda r, u: r.message == message_reaction_embed and u == ctx.author and str(
-                                    r) == emoji)
+        await self.bot.wait_for(
+            "reaction_add",
+            check=lambda r, u: r.message == message_reaction_embed and u == ctx.author and str(r) == emoji,
+        )
         await message_reaction_embed.delete()
 
 

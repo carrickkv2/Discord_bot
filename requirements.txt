@@ -50,4 +50,3 @@ urllib3==1.26.4
 utils==1.0.1
 validators==0.18.2
 watchgod==0.7
-

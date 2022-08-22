@@ -1,5 +1,5 @@
-from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
+from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 
 
@@ -10,7 +10,7 @@ def get_timezone_of_user(time: str) -> str:
     the user gives and from there converted to a pytz timezone.
     """
     geo_locator = Nominatim(user_agent="Testing_for_bot")  # replace with yours
-    geo_locator_rate = RateLimiter(geo_locator.geocode, min_delay_seconds=5, return_value_on_exception=None)
+    RateLimiter(geo_locator.geocode, min_delay_seconds=5, return_value_on_exception=None)
 
     lad = str(time)
     location = geo_locator.geocode(lad)

@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 import copy
 import io
 import re
+from typing import Any
+
 import dateparser
 from cogs.utils.csv_to_df import csv_to_df_to_dict
 from cogs.utils.lists_dicts import order
@@ -36,19 +40,19 @@ def get_string_for_time() -> str:
     string_for_time = ""
     for day in get_days():
         for key, value in csv_to_df_to_dict(path_for_csv_to_dict)[day].items():
-            if 'Eastern' in key:
+            if "Eastern" in key:
                 temp_value = str(value)
-            if 'Eastern' not in key:
-                key = ''.join((temp_value, 'Time ', key))
-                if 'Time' in key:
-                    temp_list = re.sub(r"(\d{1,2}:\d{2}):", "\g<1>", key)
-                    key = ''.join(temp_list)
-                if 'Time' in key:
-                    temp_list = key.split('Time')
-                    key = ''.join(temp_list)
+            if "Eastern" not in key:
+                key = "".join((temp_value, "Time ", key))
+                if "Time" in key:
+                    temp_list = re.sub(r"(\d{1,2}:\d{2}):", r"\g<1>", key)
+                    key = "".join(temp_list)
+                if "Time" in key:
+                    temp_list = key.split("Time")
+                    key = "".join(temp_list)
                     key += x
                     string_for_time += str(dateparser.parse(key))
-                    string_for_time += '\n'
+                    string_for_time += "\n"
     return string_for_time
 
 
@@ -61,29 +65,29 @@ def get_starting_string(string_file_to_read: str) -> str:
     """Gets the first string in a file"""
     with io.StringIO(string_file_to_read) as f:
         temp_string = f.readline()
-        return temp_string.rstrip('\n')
+        return temp_string.rstrip("\n")
 
 
-def next_string(string_file_to_read: str, string_to_compare: str) -> str:
+def next_string(string_file_to_read: str, string_to_compare: str) -> Any | None:
     """Compares a string to a text file and gets the next string in the file"""
     with io.StringIO(string_file_to_read) as f:
         temp_string = f.readline()
-        temp_string = temp_string.rstrip('\n')
+        temp_string = temp_string.rstrip("\n")
         if temp_string == string_to_compare:  # fix new line here
             next_ = next(f)
-            return next_.rstrip('\n')
+            return next_.rstrip("\n")
         else:
             while string_to_compare != temp_string:
                 temp_string = f.readline()
-                temp_string = temp_string.rstrip('\n')
+                temp_string = temp_string.rstrip("\n")
             try:
                 if string_to_compare == temp_string:
                     next_ = next(f)
-                    return next_.rstrip('\n')
+                    return next_.rstrip("\n")
                 else:
                     raise StopIteration("Expected positive integer")
             except StopIteration:
-                return  # TODO: Change this to logging
+                return
 
 
 def modify_dict(dict_to_modify: dict) -> dict:
@@ -95,7 +99,7 @@ def modify_dict(dict_to_modify: dict) -> dict:
             temp_string_containing_time = get_starting_string(get_string_for_time())
             count += 1
         for key in csv_to_df_to_dict(path_for_csv_to_dict)[day].copy():
-            if 'Eastern' not in key:
+            if "Eastern" not in key:
                 dict_to_modify.copy()[day][temp_string_containing_time] = dict_to_modify.copy()[day].pop(key)
                 temp_string_containing_time = next_string(get_string_for_time(), temp_string_containing_time)
     return dict_to_modify

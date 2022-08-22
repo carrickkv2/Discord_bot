@@ -1,9 +1,13 @@
-from discord.ext import commands
 import pathlib
-from cogs.utils.extract_table import extract_to_csv, usage_extract
+
+from cogs.utils.extract_table import extract_to_csv
+from cogs.utils.extract_table import usage_extract
+from cogs.utils.file_exists import rename_and_move
+from cogs.utils.file_exists import rename_csv
+from cogs.utils.paths_for_functions import path_for_csv_output_for_both_rename_and_extract
+from cogs.utils.paths_for_functions import path_for_write_csv
 from cogs.utils.write_headers import write_csv
-from cogs.utils.file_exists import rename_and_move, rename_csv
-from cogs.utils.paths_for_functions import path_for_csv_output_for_both_rename_and_extract, path_for_write_csv
+from discord.ext import commands
 
 
 def my_custom_check():
@@ -25,13 +29,14 @@ class Attachments(commands.Cog):
 
     @commands.check_any(my_custom_check())
     @commands.cooldown(1, 120, commands.BucketType.user)
-    @commands.command(name="at",
-                      aliases=["att"],
-                      brief="Get's the image attachment from the message",
-                      help="Get's the image posted in announcements and processes it so that it can be used by the bot.\n"
-                           "This command can only be used in the announcements channel.\n"
-                           "Example usage is `?at <message to post here>`"
-                      )
+    @commands.command(
+        name="at",
+        aliases=["att"],
+        brief="Get's the image attachment from the message",
+        help="Get's the image posted in announcements and processes it so that it can be used by the bot.\n"
+        "This command can only be used in the announcements channel.\n"
+        "Example usage is `?at <message to post here>`",
+    )
     async def read_url(self, ctx: commands.Context) -> None:
         """
         Gets the image attachment from the message
@@ -41,18 +46,18 @@ class Attachments(commands.Cog):
         output = pathlib.Path(path_for_csv_output_for_both_rename_and_extract)
         user = await self.bot.fetch_user(230942498086846464)
         if not ctx.message.attachments:
-            await ctx.message.add_reaction('\U0000274c')
+            await ctx.message.add_reaction("\U0000274c")
         else:
             async with ctx.message.channel.typing():
                 try:
                     attachment = ctx.message.attachments[0]
                     attachment_string += str(attachment)
-                    attachment_string = attachment_string.rstrip('\n')
+                    attachment_string = attachment_string.rstrip("\n")
                     rename_and_move(output)
                     await user.send(usage_extract())
                 except Exception as e:
                     print(e)
-                    await ctx.message.add_reaction('\U0000274c')
+                    await ctx.message.add_reaction("\U0000274c")
                     await user.send(str(e))
                     raise
                 try:
@@ -60,15 +65,15 @@ class Attachments(commands.Cog):
                         try:
                             rename_csv(output)
                             write_csv(path_for_write_csv)
-                            await ctx.message.add_reaction('\U00002611')
+                            await ctx.message.add_reaction("\U00002611")
                         except Exception as e:
                             print(e)
-                            await ctx.message.add_reaction('\U0000274c')
+                            await ctx.message.add_reaction("\U0000274c")
                             await user.send(str(e))
                             raise
                 except Exception as e:
                     print(e)
-                    await ctx.message.add_reaction('\U0000274c')
+                    await ctx.message.add_reaction("\U0000274c")
                     await user.send(str(e))
                     raise
 

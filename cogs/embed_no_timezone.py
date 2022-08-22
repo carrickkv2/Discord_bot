@@ -1,9 +1,12 @@
 import datetime
+
 import discord
-from discord.ext import commands
+from cogs.utils.functions_used import csv_to_df_to_dict
+from cogs.utils.functions_used import get_deep_copy
+from cogs.utils.functions_used import modify_dict
 from cogs.utils.lists_dicts import order
-from cogs.utils.functions_used import modify_dict, get_deep_copy, csv_to_df_to_dict
 from cogs.utils.paths_for_functions import path_for_csv_to_dict
+from discord.ext import commands
 
 
 class EmbedNoTimeZone(commands.Cog, name="Specific Day In EST"):
@@ -16,16 +19,15 @@ class EmbedNoTimeZone(commands.Cog, name="Specific Day In EST"):
         self.bot = bot
 
     @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.command(name="day",
-                      aliases=["Day"],
-                      brief="Shows the schedule of a specific day in EST",
-                      help="Shows a detailed list of all events happening on a specific day and the time they happen "
-                           "on in EST. Day is a required argument.\n "
-                           "Example usage is `?day tuesday`"
-                      )
+    @commands.command(
+        name="day",
+        aliases=["Day"],
+        brief="Shows the schedule of a specific day in EST",
+        help="Shows a detailed list of all events happening on a specific day and the time they happen "
+        "on in EST. Day is a required argument.\n "
+        "Example usage is `?day tuesday`",
+    )
     async def emb_no_tz(self, ctx: commands.Context, *, day: str) -> None:
-
-        # TODO: Raise an error if day is not given and print a string to the user. Also, log the error.
         """
         Gets the day from the user and returns an embed containing all events happening on that day.
         Day is a required argument.
@@ -51,30 +53,27 @@ class EmbedNoTimeZone(commands.Cog, name="Specific Day In EST"):
                 icon_url="https://cdn.discordapp.com/emojis/754736642761424986.png",
             )
 
-            copy_of_dictionary_from_numpy = modify_dict(
-                get_deep_copy(csv_to_df_to_dict(path_for_csv_to_dict)))
+            copy_of_dictionary_from_numpy = modify_dict(get_deep_copy(csv_to_df_to_dict(path_for_csv_to_dict)))
 
             for key, value in copy_of_dictionary_from_numpy[day].items():
-                if 'Eastern' in key:
+                if "Eastern" in key:
                     embed.add_field(name=value, value="~", inline=False)
                 else:
                     t = datetime.datetime.fromisoformat(key)
                     t = t.strftime("%I:%M %p")
                     embed.add_field(name=value, value=t, inline=False)
 
-            embed.add_field(
-                name="NB",
-                value="These times are in EST\n",
-                inline=True
-            )
+            embed.add_field(name="NB", value="These times are in EST\n", inline=True)
 
             emoji = "\N{Wastebasket}"
 
         message_reaction_embed = await ctx.send(embed=embed)
         await message_reaction_embed.add_reaction(emoji)
 
-        await self.bot.wait_for("reaction_add",
-                                check=lambda r, u: r.message == message_reaction_embed and u == ctx.author and str(r) == emoji)
+        await self.bot.wait_for(
+            "reaction_add",
+            check=lambda r, u: r.message == message_reaction_embed and u == ctx.author and str(r) == emoji,
+        )
         await message_reaction_embed.delete()
 
 
